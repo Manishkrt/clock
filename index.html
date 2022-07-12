@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="box1">
+        <select id="select">
+          <option value="India">India</option>
+          <option value="U.S.A">U.S.A</option>
+          <option value="Russia">Russia</option>
+          <option value="England">England</option>
+        </select>
+        <h1 class="title">Curent Time of India :</h1>
+        <div class="current">
+          <h1 id="time"></h1>
+          <span id="spantime"></span>
+          <span id="spansec"></span>
+        </div>
+        <div id="curdate">
+          <span id="spandate"></span>
+        </div>
+        <div id="curday">
+          <span id="spanday"></span>
+        </div>
+      </div>
+      <hr />
+
+      <!-- there is code of bottom box -->
+      <div class="box2">
+        <div class="box2left">
+          <h1 class="ed">Please Enter Date</h1>
+          <div><input type="date" name="date" id="date" /></div>
+          <div><button id="btn">Get Day</button></div>
+        </div>
+        <div class="box2right">
+          <h1 id="result"></h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- code of javascript  -->
+    <script>
+      // clock code start here
+      const option = { weekday: "long" };
+      setInterval(function () {
+        date = new Date();
+        hours = date.getHours();
+        minute = date.getMinutes();
+        sec = date.getSeconds();
+
+        day = date.toLocaleDateString(undefined, option);
+
+        curdate = date.toLocaleDateString();
+        document.getElementById("spandate").innerHTML = curdate;
+        document.getElementById("spanday").innerHTML = day;
+
+        // before time setting for zero
+        if (hours > 12) {
+          hour = hours - 12;
+        }
+        else {
+          hour = hours;
+        };
+        if (minute < 10) {
+          minute = "0" + minute;
+        };
+        if (sec < 10) {
+          sec = "0" + sec;
+        };
+
+        if (hour < 10) {
+          hour = "0" + hour;
+        };
+
+        if(hours == 00){
+          hour = "12";
+        };
+
+
+        // variable for print time on DOM
+        let d = [hour + ":" + minute];
+        let s = [sec];
+
+        // for print time on DOM
+        if (hours >= 12) {
+          document.getElementById("spansec").innerHTML = s + " PM";
+        } else {
+          document.getElementById("spansec").innerHTML = s + " AM";
+        }
+
+        document.getElementById("spantime").innerHTML = d;
+      }, 1000);
+      //   clock code end here
+
+      // clender code start here
+      let check = document.getElementById("btn");
+      check.addEventListener("click", function run() /*or () =>*/ {
+        let time = document.getElementById("date").value;
+        let datestr = time.slice(8, 10);
+        let monthstr = time.slice(5, 7);
+        let yearstr = time.slice(0, 4);
+
+        let date = parseInt(datestr);
+        let month = parseInt(monthstr);
+        month = month - 1;
+        let year = parseInt(yearstr);
+
+        let fulltime = new Date(year, month, date);
+        var halfday = fulltime.toString();
+        var day = halfday.slice(0, 3);
+
+        if (day == "Mon") {
+          d = "Monday";
+        } else if (day == "Tue") {
+          d = "Tuesday";
+        } else if (day == "Wed") {
+          d = "Wednesday";
+        } else if (day == "Thu") {
+          d = "Thrusday";
+        } else if (day == "Fri") {
+          d = "Friday";
+        } else if (day == "Sat") {
+          d = "Saturday";
+        } else if (day == "Sun") {
+          d = "Sunday";
+        } else if (halfday == "Invalid Date") {
+          d = "Please Enter Valid Date";
+          document.getElementById("result").className += "readd";
+        } else {
+          d = "Please Enter valid Date";
+          document.getElementById("result").className += "readd";
+        }
+
+        // for print the result of code
+        document.getElementById("result").innerHTML = d;
+      });
+      //calender code end here
+
+      window.onload = function () {
+        document.getElementById("container").className += " contop";
+      };
+    </script>
+  </body>
+</html>
